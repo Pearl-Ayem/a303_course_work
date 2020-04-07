@@ -94,13 +94,15 @@ end
 mandatory_points_hpa=[100, 92.5, 85, 70, 50, 40, 30, 25, 20, 15, 10, 7, 5, 3, 2, 1, 0.7, 0.5, 0.3, 0.2, 0.1]*10;
 lT=length(T_sig_all_points);
 lTD=length(TD_sig_all_points);
-% man_pointT=zeros(length(mandatory_points_hpa),width(data1));
-% man_pointTD=zeros(length(mandatory_points_hpa),width(data1));
+man_pointT=zeros(length(mandatory_points_hpa));
+man_pointTD=zeros(length(mandatory_points_hpa));
+zeros(length(T_sig_points_final),width(data1));
 
 for i=1:length(mandatory_points_hpa)
     for p =1:height(data1)
-        if mandatory_points_hpa(i) == round(data1.PhPa(1));
-            T_sig_all_points(lT+i,:) = table2array(data1(p,:));            
+        if mandatory_points_hpa(i) == round(data1.PhPa(1))
+            T_sig_all_points(lT+i,:) = table2array(data1(p,:));
+            man_pointT(i) = table2array(data1(index,:));
         end
     end
 end
@@ -113,51 +115,23 @@ for i=1:length(mandatory_points_hpa)
     end
 end
             
-%%
-maskT=round(data1.PhPa) == 1000 | ...
-    round(data1.PhPa) == 925 | ...
- round(data1.PhPa) == 850 | ...
- round(data1.PhPa) == 700 | ...
- round(data1.PhPa) == 500 | ...
- round(data1.PhPa) == 400 | ...
- round(data1.PhPa) == 300 | ...
- round(data1.PhPa) == 250 | ...
- round(data1.PhPa) == 200 | ...
- round(data1.PhPa) == 150 | ...
- round(data1.PhPa) == 100 | ...
- round(data1.PhPa) == 70 | ...
- round(data1.PhPa) == 50 | ...
- round(data1.PhPa) == 30 | ...
- round(data1.PhPa) == 20 | ...
- round(data1.PhPa) == 10 | ...
- round(data1.PhPa) == 7 | ...
- round(data1.PhPa) == 5 | ...
- round(data1.PhPa) == 3 | ...
- round(data1.PhPa) == 2 | ...
- round(data1.PhPa) == 1;
 
-mand_data=data1(maskT,:);
 %% Plot with new data SORTED
 xTD=sort(TD_sig_all_points);
 xT=sort(T_sig_all_points);
 
 figure
 h1=axes
-plot(xT(:,4),xT(:,2),'b-','LineWidth',2);
+plot(xT(:,4),xT(:,2),'b-');
 hold on;
-plot(data1.TdegC,data1.PhPa,'b--','LineWidth',0.5);
-plot(mand_data.TdegC,mand_data.PhPa,'b*');
+plot(data1.TdegC,data1.PhPa,'b--');
 
-plot(xTD(:,5),xTD(:,2),'r-','LineWidth',2);
-plot(data1.TDdegC,data1.PhPa,'r--','LineWidth',0.5);
-plot(mand_data.TDdegC,mand_data.PhPa,'r*');
-
+plot(xTD(:,5),xTD(:,2),'r-');
+plot(data1.TDdegC,data1.PhPa,'r--');
 set(h1,'Ydir','reverse');
 xlabel("Temp (^{\circ}C)");
 ylabel("Pressure (hPa)");
 title("Significant Points Plot");
-legend("T sig","T","mandatory points T","TD sig","TD","mandatory points TD");
+legend("T sig","T","TD sig","TD");
+% legend("T sig","TD sig");
 hold off;
-
-
-%% generate final sig points table
