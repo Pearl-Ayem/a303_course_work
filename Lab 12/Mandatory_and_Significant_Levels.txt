@@ -1,0 +1,13 @@
+MANDATORY LEVELS are at the following pressures (kPa):  100, 92.5, 85, 70, 50, 40, 30, 25, 20, 15, 10, 7, 5, 3, 2, 1, 0.7, 0.5, 0.3, 0.2, 0.1 .   These are always reported.
+Citation:  http://glossary.ametsoc.org/wiki/Mandatory_level
+
+
+SIGNIFICANT LEVELS: 
+In a radiosonde observation, a level (other than a mandatory level) for which values of pressure, temperature, and humidity are reported because temperature and/or moisture- content data at that level are sufficiently important or unusual to warrant the attention of the forecaster, or they are required for the reasonably accurate reproduction of the radiosonde observation. There are definite rules governing the selection of significant levels, set forth in the Manual of Radiosonde Observations, WBAN Circular P, 7th ed. rev., 1957.
+
+These pressure levels (other than the mandatory levels) transmitted as part of the RAOB message are at significant or abrupt changes and extrema in the vertical temperature and/or dewpoint temperature profiles. By assuming that the temperature and dewpoint profiles change linearly with height between significant levels (i.e., constant environmental lapse rate), a reasonably accurate reproduction of the RAOB sounding can be made from the sequence of RAOB message information at significant levels and supplemented by the mandatory levels.
+
+Namely, SIGNIFICANT LEVELS are the subset of pressures where there are important kinks in the sounding (except if one happens to fall on a mandatory level).  If you plot a point at every significant level and every mandatory level, and next you draw straight lines to connect the points in order from high to low pressure (low to high altitude), then the resulting line should be very close to all the radiosonde-observed data points.  
+
+Citations:http://glossary.ametsoc.org/wiki/Significant_levels 
+http://www.meteor.wisc.edu/~hopkins/aos100/raobdoc.htm 
