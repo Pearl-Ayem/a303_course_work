@@ -157,7 +157,14 @@ xlabel("Temp (^{\circ}C)");
 ylabel("Pressure (hPa)");
 title("Significant Points Plot");
 legend("T sig","T","mandatory points T","TD sig","TD","mandatory points TD");
+grid on;
+grid minor;
 hold off;
 
 
 %% generate final sig points table
+
+for i = 1:length(T_sig_all_points)
+    TD_sig_all_points(lTD+i,:) = T_sig_all_points(i,:);
+end
+xTD=sort(TD_sig_all_points);
