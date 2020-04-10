@@ -166,7 +166,7 @@ mand_data=zeros(length(mandatory_points_hpa),width(data1));
 for i=1:length(mandatory_points_hpa)
     for p =1:height(data1)
         pressure=round(data1.PhPa(p));
-        if mandatory_points_hpa(i) == pressure && ~ ismember(pressure,mand_data(:,4))
+        if mandatory_points_hpa(i) == pressure
             mand_data(i,:) = table2array(data1(p,:));  
         end
     end
@@ -174,37 +174,58 @@ end
 
 mand_data( all(~mand_data,2), : ) = [];
 %% Plot with new data SORTED
-xTD=sort(TD_sig_all_points);
-xT=sort(T_sig_all_points);
-xTnew=sort([xT;mand_data]);
+% xT=[T_sig_all_points;mand_data];
+% xTD=[TD_sig_all_points;mand_data];
+% xTnew=sort(xT);
+% xTDnew=sort(xTD);
+% 
+% figure;
+% h1=axes;
+% plot(xTnew(:,4),xTnew(:,2),'b-','LineWidth',1);
+% hold on;
+% plot(xTnew(:,4),xTnew(:,2),'b.','MarkerSize',10);
+% plot(mand_data(:,4),mand_data(:,2),'bo');
+% plot(data1.TdegC,data1.PhPa,'b--','LineWidth',0.5);
+% 
+% 
+% plot(xTDnew(:,5),xTDnew(:,2),'r-','LineWidth',1);
+% plot(xTDnew(:,5),xTDnew(:,2),'r.','MarkerSize',10);
+% plot(mand_data(:,5),mand_data(:,2),'ro');
+% plot(data1.TDdegC,data1.PhPa,'r--','LineWidth',0.5);
+% 
+% 
+% set(h1,'Ydir','reverse');
+% xlabel("Temp (^{\circ}C)");
+% ylabel("Pressure (hPa)");
+% title("Significant Points Plot");
+% % legend("T sig","T","mandatory points T","TD sig","TD","mandatory points TD");
+% grid on;
+% grid minor;
+% hold off;
+
+
+%% Plot with manually editted TD sig + man points and T sig + man points
+
 
 figure;
 h1=axes;
-plot(xTnew(:,4),xTnew(:,2),'b-','LineWidth',2);
+plot(T_sig_all_points(:,4),T_sig_all_points(:,2),'b.-','LineWidth',1,'MarkerSize',12);
 hold on;
-plot(xTnew(:,4),xTnew(:,2),'b.','MarkerSize',10);
-plot(mand_data(:,4),mand_data(:,2),'bo');
 plot(data1.TdegC,data1.PhPa,'b--','LineWidth',0.5);
-% plot(mand_data.TdegC,mand_data.PhPa,'bo');
+plot(mand_data(:,4),mand_data(:,2),'bo');
 
-plot(xTD(:,5),xTD(:,2),'r.','LineWidth',2);
-% plot(data1.TDdegC,data1.PhPa,'r--','LineWidth',0.5);
-% plot(mand_data.TDdegC,mand_data.PhPa,'ro');
+
+plot(TD_sig_all_points(:,5),TD_sig_all_points(:,2),'r.-','LineWidth',1,'MarkerSize',12);
+plot(data1.TDdegC,data1.PhPa,'r--','LineWidth',0.5);
+plot(mand_data(:,5),mand_data(:,2),'ro');
+
 
 set(h1,'Ydir','reverse');
 xlabel("Temp (^{\circ}C)");
 ylabel("Pressure (hPa)");
 title("Significant Points Plot");
-% legend("T sig","T","mandatory points T","TD sig","TD","mandatory points TD");
+legend("T sig points","T raw","T mandatory points","TD sig points","TD raw","TD mandatory points");
 grid on;
 grid minor;
 hold off;
-
-
-%% generate final sig points table
-% 
-% for i = 1:length(T_sig_all_points)
-%     TD_sig_all_points(lTD+i,:) = T_sig_all_points(i,:);
-% end
-% xTD=sort(TD_sig_all_points);
 
