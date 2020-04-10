@@ -114,27 +114,27 @@ T_sig_all_points=table2array(T_sig_all_points);
 
 %% Add mandatory points to sig points
 mandatory_points_hpa=[100, 92.5, 85, 70, 50, 40, 30, 25, 20, 15, 10, 7, 5, 3, 2, 1, 0.7, 0.5, 0.3, 0.2, 0.1]*10;
-% lT=length(T_sig_all_points);
-% lTD=length(TD_sig_all_points);
-% 
-% 
-% for i=1:length(mandatory_points_hpa)
-%     for p =1:height(data1)
-%         pressure=round(data1.PhPa(p));
-%         if mandatory_points_hpa(i) == pressure
-%             T_sig_all_points(lT+i,:) = table2array(data1(p,:));            
-%         end
-%     end
-% end
-% 
-% for i=1:length(mandatory_points_hpa)
-%     for p =1:height(data1)
-%         pressure=round(data1.PhPa(p));
-%         if mandatory_points_hpa(i) == pressure 
-%             TD_sig_all_points(lTD+i,:) = table2array(data1(p,:));
-%         end
-%     end
-% end
+lT=length(T_sig_all_points);
+lTD=length(TD_sig_all_points);
+
+
+for i=1:length(mandatory_points_hpa)
+    for p =1:height(data1)
+        pressure=round(data1.PhPa(i));
+        if mandatory_points_hpa(i) == pressure
+            T_sig_all_points(lT+i,:) = table2array(data1(p,:));            
+        end
+    end
+end
+
+for i=1:length(mandatory_points_hpa)
+    for p =1:height(data1)
+        pressure=round(data1.PhPa(i));
+        if mandatory_points_hpa(i) == pressure
+            TD_sig_all_points(lTD+i,:) = table2array(data1(p,:));
+        end
+    end
+end
             
 %%
 % maskT=round(data1.PhPa) == 1000 | ...
@@ -160,19 +160,18 @@ mandatory_points_hpa=[100, 92.5, 85, 70, 50, 40, 30, 25, 20, 15, 10, 7, 5, 3, 2,
 %  round(data1.PhPa) == 1;\
 % 
 % mand_data=data1(maskT,:);
-
-
 mand_data=zeros(length(mandatory_points_hpa),width(data1));
 for i=1:length(mandatory_points_hpa)
     for p =1:height(data1)
-        pressure=round(data1.PhPa(p));
-        if mandatory_points_hpa(i) == pressure && ~ ismember(pressure,mand_data(:,4))
+        pressure=round(data1.PhPa(1));
+        if mandatory_points_hpa(i) == pressure
+            mandatory_points_hpa(i)
+            pressure
             mand_data(i,:) = table2array(data1(p,:));  
         end
     end
 end
 
-mand_data( all(~mand_data,2), : ) = [];
 %% Plot with new data SORTED
 xTD=sort(TD_sig_all_points);
 xT=sort(T_sig_all_points);
@@ -180,9 +179,9 @@ xTnew=sort([xT;mand_data]);
 
 figure;
 h1=axes;
-plot(xTnew(:,4),xTnew(:,2),'b-','LineWidth',2);
+plot(xT(:,4),xT(:,2),'b-','LineWidth',2);
 hold on;
-plot(xTnew(:,4),xTnew(:,2),'b.','MarkerSize',10);
+plot(xT(:,4),xT(:,2),'b.','MarkerSize',10);
 plot(mand_data(:,4),mand_data(:,2),'bo');
 plot(data1.TdegC,data1.PhPa,'b--','LineWidth',0.5);
 % plot(mand_data.TdegC,mand_data.PhPa,'bo');
